@@ -1,6 +1,7 @@
 import importlib
 import requests
 from django.http import HttpResponse
+from django.utils.cache import patch_vary_headers
 from django_seo_js import settings
 
 
@@ -66,5 +67,6 @@ class RequestsBasedBackend(object):
             if k not in IGNORED_HEADERS:
                 r[k] = v
         r['content-length'] = len(response.content)
+        patch_vary_headers(r, ['User-Agent'])
         r.status_code = response.status_code
         return r
