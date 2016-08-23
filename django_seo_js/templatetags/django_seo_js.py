@@ -2,6 +2,6 @@ from django import template
 register = template.Library()
 
 
-@register.simple_tag
+@register.simple_tag(is_safe=True)
 def seo_js_head(*args):
     return """<meta name="fragment" content="!">"""
