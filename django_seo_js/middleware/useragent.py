@@ -2,12 +2,13 @@ import re
 from django_seo_js import settings
 from django_seo_js.backends import SelectedBackend
 from django_seo_js.helpers import request_should_be_ignored
+from django.utils.deprecation import MiddlewareMixin
 
 import logging
 logger = logging.getLogger(__name__)
 
 
-class UserAgentMiddleware(SelectedBackend):
+class UserAgentMiddleware(MiddlewareMixin, SelectedBackend):
     def __init__(self, *args, **kwargs):
         super(UserAgentMiddleware, self).__init__(*args, **kwargs)
         regex_str = "|".join(settings.USER_AGENTS)
